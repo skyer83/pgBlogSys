@@ -12,21 +12,11 @@
 <link rel="stylesheet" href="<c:url value="/thirdLib/layui/css/layui.css"/>">
 <link rel="stylesheet" href="<c:url value="/thirdLib/layui/css/global.css"/>">
 <link rel="stylesheet" href="<c:url value="/css/login/login.css"/>">
-<style type="text/css">
-<%--
-.login {
-	position  : absolute;
-	left      : 50%;
-	top       : 50%;
-	transform : translate(-50%,-55%);
-}
---%>
-</style>
 </head>
 <body style="background-color: #F2F2F2;">
 <div class="login">
 	<h1>博客管理登录</h1>
-	<form class="layui-form">
+	<form class="layui-form" lay-filter="form01">
 		<div class="layui-form-item">
 			<input class="layui-input" name="username" placeholder="用户名" lay-verify="required" type="text" autocomplete="off">
 		</div>
@@ -44,7 +34,13 @@
 </div>
 <script src="<c:url value="/thirdLib/layui/layui.js"/>"></script>
 <script>
-
+layui.use(['form', 'layer'], function(){
+	var $ = layui.$	//由于layer弹层依赖jQuery，所以可以直接得到
+	, form = layui.form
+	, layer = layui.layer;
+	
+	
+});
 </script>
 </body>
 </html>
