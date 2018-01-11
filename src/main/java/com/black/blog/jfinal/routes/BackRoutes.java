@@ -1,5 +1,6 @@
 package com.black.blog.jfinal.routes;
 
+import com.black.blog.back.index.web.IndexController;
 import com.black.blog.back.login.web.LoginController;
 import com.jfinal.config.Routes;
 
@@ -23,6 +24,8 @@ public class BackRoutes extends Routes {
 	public void config() {
 		// LOGIN模块
 		add(RoutesConstants.BACK_LOGIN_LOGIN, LoginController.class);
+		// INDEX模块
+		add(RoutesConstants.BACK_INDEX_INDEX, IndexController.class);
 	}
 
 }

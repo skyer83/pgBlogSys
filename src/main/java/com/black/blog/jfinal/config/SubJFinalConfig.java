@@ -1,4 +1,4 @@
-package com.black.blog.jfinal.common;
+package com.black.blog.jfinal.config;
 
 import com.black.blog.jfinal.routes.BackRoutes;
 import com.black.blog.jfinal.routes.FrontRoutes;
@@ -98,13 +98,13 @@ public class SubJFinalConfig extends JFinalConfig {
 	 * 配置全局拦截器
 	 */
 	public void configInterceptor(Interceptors me) {
-
+		
 	}
 
 	/**
 	 * 配置处理器
 	 */
 	public void configHandler(Handlers me) {
-
+		
 	}
 }
