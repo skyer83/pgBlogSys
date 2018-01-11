@@ -12,5 +12,5 @@
 ### 日志记录
 20180110 <br>
 >1、完成JFINAL路由注册规划：<br>
-  * 后台管理的 Controller 统一在 BackRoutes 注册 <br>
-  * 前台管理的 Controller 统一在 FrontRoutes 注册 <br>
+* 后台管理的 Controller 统一在 BackRoutes 注册 <br>
+* 前台管理的 Controller 统一在 FrontRoutes 注册 <br>
