@@ -1,5 +1,6 @@
 package com.black.blog.jfinal.config;
 
+import com.black.blog.jfinal.handler.SessionIdHandler;
 import com.black.blog.jfinal.routes.BackRoutes;
 import com.black.blog.jfinal.routes.FrontRoutes;
 import com.jfinal.config.Constants;
@@ -105,6 +106,6 @@ public class SubJFinalConfig extends JFinalConfig {
 	 * 配置处理器
 	 */
 	public void configHandler(Handlers me) {
-		
+		me.add(new SessionIdHandler());
 	}
 }
