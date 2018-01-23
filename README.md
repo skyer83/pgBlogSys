@@ -24,6 +24,9 @@
 20180123 <BR>
 > 1、完成库表设计<BR>
 > 2、完成 model 生成<BR>
+* model 生成类为 JFinalGenerator
+* 生成 model 时生成的 MappingKit 类命名规范为：_ + 模块报名 + MappingKit
+* 生成 model 后，需要手工到 com.black.blog.jfinal.common.MappingKit 添加映射，这样 model 才能生效
 
 ### TODO:
 * 登录模块；
