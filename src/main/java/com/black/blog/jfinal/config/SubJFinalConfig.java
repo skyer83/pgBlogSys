@@ -1,5 +1,7 @@
 package com.black.blog.jfinal.config;
 
+import com.black.blog.common.BlogConfigKey;
+import com.black.blog.jfinal.common.MappingKit;
 import com.black.blog.jfinal.handler.SessionIdHandler;
 import com.black.blog.jfinal.routes.BackRoutes;
 import com.black.blog.jfinal.routes.FrontRoutes;
@@ -11,6 +13,7 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.template.Engine;
@@ -51,8 +54,8 @@ public class SubJFinalConfig extends JFinalConfig {
 
 		me.setViewType(ViewType.JSP); // 编译方式为 JSP
 
-		PropKit.use("blog_config.txt"); // 加载少量必要配置，随后可用PropKit.get(...)获取值
-		me.setDevMode(PropKit.getBoolean("devMode", false));	// 根据配置设置开发模式
+		PropKit.use(BlogConfigKey.CONFIG_FILE); // 加载少量必要配置，随后可用PropKit.get(...)获取值
+		me.setDevMode(PropKit.getBoolean(BlogConfigKey.DEV_MODE, false));	// 根据配置设置开发模式
 	}
 
 	/**
@@ -80,19 +83,16 @@ public class SubJFinalConfig extends JFinalConfig {
 	 * 配置插件
 	 */
 	public void configPlugin(Plugins me) {
-//		// 配置 druid 数据库连接池插件
-//		DruidPlugin druidPlugin = new DruidPlugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
-//		me.add(druidPlugin);
-//
-//		// 配置ActiveRecord插件
-//		ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin);
-//		// 所有映射在 MappingKit 中自动化搞定
-//		// _MappingKit.mapping(arp);
-//		me.add(arp);
+		DruidPlugin druidPlugin = createDruidPlugin(); // 配置 druid 数据库连接池插件
+		me.add(druidPlugin);
+
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(druidPlugin); // 配置ActiveRecord插件
+		MappingKit.mapping(arp); // 所有映射在 MappingKit 中自动化搞定
+		me.add(arp);
 	}
 
 	public static DruidPlugin createDruidPlugin() {
-		return new DruidPlugin(PropKit.get("jdbcUrl"), PropKit.get("user"), PropKit.get("password").trim());
+		return new DruidPlugin(PropKit.get(BlogConfigKey.JDBC_URL), PropKit.get(BlogConfigKey.USRE), PropKit.get(BlogConfigKey.PASSWORD).trim());
 	}
 
 	/**

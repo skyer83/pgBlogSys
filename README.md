@@ -6,7 +6,7 @@
 2、前端展示：layui <BR>
 
 ### 参考项目：
-[jfinal_demo_for_maven](http://www.jfinal.com/download/?file=jfinal-3.3_demo_for_maven.zip?_blank) <BR>
+[jfinal_demo_for_maven](http://www.jfinal.com/download/?file=jfinal-3.3_demo_for_maven.zip) <BR>
 
 
 ### 日志记录
@@ -20,3 +20,8 @@
 * 每个模块独立一个 msg 包
 * msg包下必有 3 个文件，如登录模块名为 login，则 3 个文件为：LoginMsg.java、 login_zh_CN.properties、login_en_US.properties
 * 通过 LoginMsg.get(String key) 和 LoginMsg.format(String key, Object... arguments) 获取对应的值
+
+### TODO:
+创建库表；
+
+

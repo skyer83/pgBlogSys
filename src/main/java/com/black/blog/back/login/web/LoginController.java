@@ -51,6 +51,8 @@ public class LoginController extends BackController {
 			log.error(null, e);
 		}
 		renderNull(); // 不渲染，即不向客户端返回数据
+		
+		//this.renderCaptcha(); // jfinal 自带生成验证码的方法，参见：http://www.jfinal.com/share/81?p=2#reply_start
 	}
 	
 	/**

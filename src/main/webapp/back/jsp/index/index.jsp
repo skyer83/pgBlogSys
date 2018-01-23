@@ -7,8 +7,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>black的博客系统</title>
-<link rel="stylesheet" href="<c:url value="/thirdLib/layui/css/layui.css"/>">
-<link rel="stylesheet" href="<c:url value="/thirdLib/layui/css/global.css"/>">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">

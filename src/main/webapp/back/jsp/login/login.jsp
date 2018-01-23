@@ -11,8 +11,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>black的博客系统</title>
-<link rel="stylesheet" href="<c:url value="/thirdLib/layui/css/layui.css"/>">
-<link rel="stylesheet" href="<c:url value="/thirdLib/layui/css/global.css"/>">
 <link rel="stylesheet" href="<c:url value="/back/css/login/login.css"/>">
 </head>
 <body style="background-color: #F2F2F2;">
@@ -20,13 +18,13 @@
 	<h1>博客管理登录</h1>
 	<form class="layui-form" action="<c:url value="/back/index/index"/>" method="post">
 		<div class="layui-form-item">
-			<input class="layui-input" name="userName" placeholder="用户名" lay-verify="required" type="text" autocomplete="off">
+			<input class="layui-input" name="userName" placeholder="用户名" lay-verify="required" type="text" autocomplete="off" value="admin">
 		</div>
 		<div class="layui-form-item">
-			<input class="layui-input" name="password" placeholder="密码" lay-verify="required" type="password" autocomplete="off">
+			<input class="layui-input" name="password" placeholder="密码" lay-verify="required" type="password" autocomplete="off" value="123456">
 		</div>
 		<div class="layui-form-item form_code">
-			<input class="layui-input" name="verifyCode" placeholder="验证码" lay-verify="required" type="text" autocomplete="off">
+			<input class="layui-input" name="verifyCode" placeholder="验证码" lay-verify="required" type="text" autocomplete="off" value="8888">
 			<div class="code">
 				<img id="img_verifyCode" width="<%= LoginConstants.VERIFY_CODE_WIDTH%>" height="<%= LoginConstants.VERIFY_CODE_HEIGHT%>">
 			</div>
