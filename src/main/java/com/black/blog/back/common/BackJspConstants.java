@@ -7,5 +7,5 @@ package com.black.blog.back.common;
  */
 public class BackJspConstants {
 
-	public static final String BASE_PATH = "/back/jsp";
+	public static final String BACK_BASE = "/back/";
 }

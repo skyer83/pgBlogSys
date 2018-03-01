@@ -10,5 +10,6 @@ import com.black.blog.back.common.BackJspConstants;
 public class LoginJspConstants {
 	
 	/** 登录页面 */
-	public static final String LOGIN = BackJspConstants.BASE_PATH + "/login/login.jsp";
+	public static final String LOGIN_JSP = BackJspConstants.BACK_BASE + "login/login.jsp";
+	public static final String LOGIN_URL = BackJspConstants.BACK_BASE + "login/login";
 }

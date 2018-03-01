@@ -76,6 +76,7 @@ DROP TABLE IF EXISTS `bi_role`;
 
 CREATE TABLE `bi_role` (
   `ID` varchar(32) collate utf8_bin NOT NULL,
+  `ROLE_CODE` varchar(50) collate utf8_bin default NULL,
   `ROLE_NAME` varchar(50) collate utf8_bin default NULL,
   `CREATE_TIME` varchar(14) collate utf8_bin default NULL,
   `CREATE_USER_ID` varchar(32) collate utf8_bin default NULL,

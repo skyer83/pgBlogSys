@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import com.black.blog.common.BlogConfigKey;
+import com.black.blog.common.comm.BlogConfigKey;
 import com.black.blog.jfinal.config.SubJFinalConfig;
 import com.black.blog.jfinal.ext.generator.GeneratorExt;
 import com.jfinal.kit.PathKit;

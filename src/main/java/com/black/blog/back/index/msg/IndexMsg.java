@@ -1,6 +1,6 @@
 package com.black.blog.back.index.msg;
 
-import com.black.blog.common.BlackCommon;
+import com.black.blog.common.comm.BlackCommon;
 import com.jfinal.i18n.I18n;
 import com.jfinal.i18n.Res;
 

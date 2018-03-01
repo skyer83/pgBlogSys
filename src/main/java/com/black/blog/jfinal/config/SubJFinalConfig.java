@@ -1,8 +1,9 @@
 package com.black.blog.jfinal.config;
 
-import com.black.blog.common.BlogConfigKey;
+import com.black.blog.common.comm.BlogConfigKey;
 import com.black.blog.jfinal.common.MappingKit;
 import com.black.blog.jfinal.handler.SessionIdHandler;
+import com.black.blog.jfinal.interceptor.GlobalAuthInterceptor;
 import com.black.blog.jfinal.routes.BackRoutes;
 import com.black.blog.jfinal.routes.FrontRoutes;
 import com.jfinal.config.Constants;
@@ -99,7 +100,7 @@ public class SubJFinalConfig extends JFinalConfig {
 	 * 配置全局拦截器
 	 */
 	public void configInterceptor(Interceptors me) {
-		
+		me.addGlobalActionInterceptor(new GlobalAuthInterceptor()); // 添加全局拦截器
 	}
 
 	/**

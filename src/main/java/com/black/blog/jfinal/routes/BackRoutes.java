@@ -2,6 +2,7 @@ package com.black.blog.jfinal.routes;
 
 import com.black.blog.back.index.web.IndexController;
 import com.black.blog.back.login.web.LoginController;
+import com.black.blog.jfinal.interceptor.BackAuthInterceptor;
 import com.jfinal.config.Routes;
 
 /**
@@ -22,6 +23,8 @@ public class BackRoutes extends Routes {
 	 */
 	@Override
 	public void config() {
+		addInterceptor(new BackAuthInterceptor());	// 统一后台管理拦截器，统一对所有后台Action对应的 controllerKey进行拦截
+		
 		// LOGIN模块
 		add(RoutesConstants.BACK_LOGIN_LOGIN, LoginController.class);
 		// INDEX模块

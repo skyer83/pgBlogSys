@@ -28,8 +28,14 @@
 * 生成 model 时生成的 MappingKit 类命名规范为：_ + 模块报名 + MappingKit
 * 生成 model 后，需要手工到 com.black.blog.jfinal.common.MappingKit 添加映射，这样 model 才能生效
 
+### 20180301 <BR>
+> 初步集成 shiro
+> 初步搭建前后台分离
+
 ### TODO:
+* 整合Shiro，区分前后台登录
+* 权限管理；
 * 登录模块；
-* 后台管理模块
+* 后台管理模块；
 
 

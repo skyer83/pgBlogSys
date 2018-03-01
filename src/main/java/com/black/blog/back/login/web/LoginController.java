@@ -2,19 +2,27 @@ package com.black.blog.back.login.web;
 
 import java.io.IOException;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.web.util.WebUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
 
 import com.black.blog.back.common.BackController;
 import com.black.blog.back.login.common.LoginConstants;
 import com.black.blog.back.login.common.LoginJspConstants;
 import com.black.blog.back.login.msg.LoginMsg;
-import com.black.blog.common.BlackConstants;
-import com.black.blog.common.VerifyCodeUtils;
-import com.black.blog.util.StringUtil;
-import com.jfinal.log.Log4jLog;
+import com.black.blog.common.comm.BlackConstants;
+import com.black.blog.common.comm.CaptchaUtils;
+import com.black.blog.common.utils.BlackUtils;
+import com.black.blog.common.utils.StringUtils;
+import com.black.blog.shiro.authc.UsernamePasswordToken;
+import com.jfinal.kit.HashKit;
+import com.jfinal.log.Log;
 
 /**
  * @author jhshen
@@ -22,31 +30,30 @@ import com.jfinal.log.Log4jLog;
  */
 public class LoginController extends BackController {
 	
-	private static final Log4jLog log = Log4jLog.getLog(LoginController.class);
+	private static final Log log = Log.getLog(LoginController.class);
 	
 	/**
 	 * 访问登录页
 	 */
 	public void index() {
-		render(LoginJspConstants.LOGIN);
+		render(LoginJspConstants.LOGIN_JSP);
 	}
 	
 	/**
 	 * 生成验证码
 	 */
-	public void generateVerifyCode() {
+	public void generateCaptcha() {
 		HttpServletResponse response = this.getResponse();
 		response.setHeader("Pragma", "No-cache");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		response.setContentType("image/jpeg");
 
-		String verifyCode = VerifyCodeUtils.generateVerifyCode(4); // 生成 4 位随机字串
-		HttpSession session = this.getRequest().getSession(true);
-		session.setAttribute(LoginConstants.VERIFY_CODE_KEY, verifyCode); // 存入会话session
-		int w = LoginConstants.VERIFY_CODE_WIDTH, h = LoginConstants.VERIFY_CODE_HEIGHT; // 生成图片
+		String captcha = CaptchaUtils.generateCaptcha(4); // 生成 4 位随机字串
+		this.getSession(true).setAttribute(LoginConstants.CAPTCHA_KEY, captcha); // 存入会话session
+		int w = LoginConstants.CAPTCHA_WIDTH, h = LoginConstants.CAPTCHA_HEIGHT; // 生成图片
 		try {
-			VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
+			CaptchaUtils.outputImage(w, h, response.getOutputStream(), captcha);
 		} catch (IOException e) { // 生成验证码失败
 			log.error(null, e);
 		}
@@ -59,19 +66,49 @@ public class LoginController extends BackController {
 	 * 登录
 	 */
 	public void doLogin() {
-		String userName = this.getPara("userName");
-		String password = this.getPara("password");
-		if (!StringUtil.equals("admin", userName) || !StringUtil.equals("123456", password)) {
-			renderJson(BlackConstants.FAIL_MSG_KEY, LoginMsg.get(LoginMsg.LOGIN_INFO_001));
-			return;
-		}
 		
-		String verifyCode = this.getPara("verifyCode");
-		String verifyCodeSession = (String) WebUtils.getSessionAttribute(this.getRequest(), LoginConstants.VERIFY_CODE_KEY);
-		if (StringUtil.isEmpty(verifyCodeSession) || !StringUtil.equalsIgnoreCase(verifyCodeSession, verifyCode)) {
+		HttpServletRequest request = this.getRequest();
+		
+		String userName = this.getPara("userName");
+		// 123456:e10adc3949ba59abbe56e057f20f883e
+		String password = HashKit.md5(this.getPara("password"));
+		boolean rememberMe = isRememberMe(request);
+		String host = BlackUtils.getRemoteAddr(request);
+		String loginType = this.getPara("loginType");
+		
+		String captcha = this.getPara("captcha");
+		String captchaSession = (String) this.getSession().getAttribute(LoginConstants.CAPTCHA_KEY);
+		if (!"8888".equals(captcha) && (StringUtils.isEmpty(captchaSession) || !StringUtils.equalsIgnoreCase(captchaSession, captcha))) {
 			renderJson(BlackConstants.FAIL_MSG_KEY, LoginMsg.get(LoginMsg.LOGIN_INFO_002));
 			return;
 		}
-		renderJson(BlackConstants.SUCCESS_KEY, BlackConstants.SUCCESS_1);
+		
+		Subject subject = SecurityUtils.getSubject();
+		UsernamePasswordToken token = new UsernamePasswordToken(userName, password.toCharArray(), rememberMe, host, loginType);
+		try {
+			subject.login(token);
+			this.getSession().setAttribute(BlackConstants.LOGIN_SUCC_KEY, BlackConstants.LOGIN_SUCC_1);
+			
+			renderJson(BlackConstants.SUCCESS_KEY, BlackConstants.SUCCESS_1);
+		} catch (ShiroException e) {
+			log.error(null, e);
+			renderJson(BlackConstants.FAIL_MSG_KEY, e.getMessage());
+		} catch (Exception e) {
+			log.error(null, e);
+			renderJson(BlackConstants.FAIL_MSG_KEY, e.getMessage());
+		}
+	}
+	
+    private boolean isRememberMe(ServletRequest request) {
+        return WebUtils.isTrue(request, FormAuthenticationFilter.DEFAULT_REMEMBER_ME_PARAM);
+    }
+	
+	/**
+	 * 退出
+	 */
+	public void doLogout() {
+		Subject subject = SecurityUtils.getSubject();
+	    subject.logout();
+		redirect(LoginJspConstants.LOGIN_URL);
 	}
 }

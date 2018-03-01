@@ -1,5 +1,6 @@
 package com.black.blog.jfinal.routes;
 
+import com.black.blog.jfinal.interceptor.FrontAuthInterceptor;
 import com.jfinal.config.Routes;
 
 /**
@@ -15,7 +16,7 @@ public class FrontRoutes extends Routes {
 	 */
 	@Override
 	public void config() {
-		
+		addInterceptor(new FrontAuthInterceptor());
 	}
 
 }

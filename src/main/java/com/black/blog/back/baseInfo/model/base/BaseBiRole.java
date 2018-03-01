@@ -18,6 +18,15 @@ public abstract class BaseBiRole<M extends BaseBiRole<M>> extends Model<M> imple
 		return getStr("ID");
 	}
 
+	public M setRoleCode(java.lang.String roleCode) {
+		set("ROLE_CODE", roleCode);
+		return (M)this;
+	}
+	
+	public java.lang.String getRoleCode() {
+		return getStr("ROLE_CODE");
+	}
+
 	public M setRoleName(java.lang.String roleName) {
 		set("ROLE_NAME", roleName);
 		return (M)this;
