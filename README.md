@@ -29,8 +29,8 @@
 * 生成 model 后，需要手工到 com.black.blog.jfinal.common.MappingKit 添加映射，这样 model 才能生效
 
 ### 20180301 <BR>
-> 初步集成 shiro
-> 初步搭建前后台分离
+> 初步集成 shiro <BR>
+> 初步搭建前后台分离 <BR>
 
 ### TODO:
 * 整合Shiro，区分前后台登录
